@@ -1,0 +1,94 @@
+package javaproject;
+
+import java.awt.EventQueue;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+
+import javax.swing.JLabel;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Label;
+
+import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import java.io.File;
+import java.io.IOException;
+import javax.swing.SwingConstants;
+
+public class test extends JFrame implements ActionListener {
+
+    // ... (기존 코드 유지)
+
+    // MySQL 연결에 필요한 정보
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/your_database_name";
+    private static final String USER = "your_username";
+    private static final String PASSWORD = "your_password";
+
+    /**
+     * Create the application.
+     */
+    public test() {
+        initialize();
+    }
+
+    // ... (기존 코드 유지)
+
+    /**
+     * MySQL 데이터베이스에 이미지 경로를 저장하는 메서드
+     */
+    private void saveImageToDatabase(String imageUrl) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
+            String query = "INSERT INTO your_table_name (image_url) VALUES (?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, imageUrl);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 이미지를 업로드하는 액션 이벤트 메서드 수정
+     */
+    public void act(JButton btn, JLabel lab, JButton del) {
+        btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btn) {
+                    FC.setFileFilter(filter);
+                    int returnVal = FC.showOpenDialog(getParent());
+                    String imageUrl = FC.getSelectedFile().getPath();
+                    ImageIcon imageIcon = createImageIcon(imageUrl, lab);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        lab.setIcon(imageIcon);
+                        btn.setVisible(false);
+                        del.setVisible(true);
+
+                        // 이미지를 데이터베이스에 저장
+                        saveImageToDatabase(imageUrl);
+                    }
+                }
+            }
+        });
+    }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+    // ... (기존 코드 유지)
+}

@@ -1,0 +1,288 @@
+package javaproject;
+
+import java.awt.EventQueue;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
+import java.awt.Image;
+import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+
+
+
+
+public class test extends JFrame implements ActionListener{
+
+	private JFrame frame;
+	JPanel p = new JPanel();
+	JFileChooser FC = new JFileChooser();
+	FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF & PNG Images","jpg","gif","png");
+	
+
+	
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					test window = new test();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public test() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	
+	public void act(JButton btn, JLabel lab, JButton del){
+		btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource()==btn) {
+					FC.setFileFilter(filter);
+					int returnVal = FC.showOpenDialog(getParent());
+					String imageUrl = FC.getSelectedFile().getPath();
+					ImageIcon imageIcon = createImageIcon(imageUrl,lab);
+					if(returnVal == JFileChooser.APPROVE_OPTION) {
+						lab.setIcon(imageIcon);
+						btn.setVisible(false);
+						del.setVisible(true);
+					}
+				}
+			}
+		});
+	}
+	public void del(JButton btn, JLabel lab, JButton del) {
+		del.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource()==del) {
+					btn.setVisible(true);
+					lab.setIcon(null);
+					lab.setText("");
+					del.setVisible(false);
+				}
+			}
+		});
+	}
+
+	
+	public void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 934, 605);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		
+		JLabel label1 = new JLabel("");
+		JButton btn1 = new JButton("upload");
+		JButton delete1 = new JButton("delete");
+		label1.setBounds(50, 0, 125, 181);
+		btn1.setBounds(50, 180, 125, 29);
+		delete1.setBounds(50, 209, 125, 29);
+		delete1.setVisible(false);
+		
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().add(label1);
+		frame.getContentPane().add(btn1);
+		frame.getContentPane().add(delete1);
+		
+		act(btn1,label1,delete1);
+		del(btn1,label1,delete1);
+		
+
+		JButton btn2 = new JButton("upload");
+		JLabel label2 = new JLabel("");
+		JButton delete2 = new JButton("delete");
+		btn2.setBounds(225, 180, 125, 29);
+		label2.setBounds(225, 0, 125, 181);
+		delete2.setBounds(225, 209, 125, 29);
+		delete2.setVisible(false);
+
+		frame.getContentPane().add(btn2);
+		frame.getContentPane().add(label2);
+		frame.getContentPane().add(delete2);
+		
+		act(btn2,label2,delete2);
+		del(btn2,label2,delete2);
+		
+		
+		
+		JButton btn3 = new JButton("upload");
+		JLabel label3 = new JLabel("");
+		JButton delete3 = new JButton("delete");		
+		btn3.setBounds(400, 180, 125, 29);
+		label3.setBounds(400, 0, 125, 181);
+		delete3.setBounds(400, 209, 125, 29);
+		delete3.setVisible(false);
+		
+		frame.getContentPane().add(btn3);
+		frame.getContentPane().add(label3);
+		frame.getContentPane().add(delete3);
+		
+		act(btn3,label3,delete3);
+		del(btn3,label3,delete3);
+		
+		
+		
+		JButton btn4 = new JButton("upload");
+		btn4.setBounds(575, 180, 125, 29);
+		frame.getContentPane().add(btn4);
+		JLabel label4 = new JLabel("");
+		label4.setBounds(575, 0, 125, 181);
+		frame.getContentPane().add(label4);
+		JButton delete4 = new JButton("delete");
+		delete4.setBounds(575, 209, 125, 29);
+		frame.getContentPane().add(delete4);
+		delete4.setVisible(false);
+		
+		act(btn4,label4,delete4);
+		del(btn4,label4,delete4);
+		
+		
+		JButton btn5 = new JButton("upload");
+		btn5.setBounds(750, 180, 125, 29);
+		frame.getContentPane().add(btn5);
+		JLabel label5 = new JLabel("");
+		label5.setBounds(750, 0, 125, 181);
+		frame.getContentPane().add(label5);
+		JButton delete5 = new JButton("delete");
+		delete5.setBounds(750, 209, 125, 29);
+		frame.getContentPane().add(delete5);
+		delete5.setVisible(false);
+		
+		act(btn5,label5,delete5);
+		del(btn5,label5,delete5);
+		
+		
+		JButton btn6 = new JButton("upload");
+		btn6.setBounds(50, 449, 125, 29);
+		frame.getContentPane().add(btn6);
+		JLabel label6 = new JLabel("");
+		label6.setBounds(50, 268, 125, 181);
+		frame.getContentPane().add(label6);
+		JButton delete6 = new JButton("delete");
+		delete6.setBounds(50, 478, 125, 29);
+		frame.getContentPane().add(delete6);
+		delete6.setVisible(false);
+		
+		act(btn6,label6,delete6);
+		del(btn6,label6,delete6);
+		
+		
+		
+		JButton btn7 = new JButton("upload");
+		btn7.setBounds(225, 449, 125, 29);
+		frame.getContentPane().add(btn7);
+		JLabel label7 = new JLabel("");
+		label7.setBounds(225, 268, 125, 181);
+		frame.getContentPane().add(label7);
+		JButton delete7 = new JButton("delete");
+		delete7.setBounds(225, 478, 125, 29);
+		frame.getContentPane().add(delete7);
+		delete7.setVisible(false);
+		
+		act(btn7,label7,delete7);
+		del(btn7,label7,delete7);
+		
+		
+		JButton btn8 = new JButton("upload");
+		btn8.setBounds(400, 449, 125, 29);
+		frame.getContentPane().add(btn8);
+		JLabel label8 = new JLabel("");
+		label8.setBounds(400, 268, 125, 181);
+		frame.getContentPane().add(label8);
+		JButton delete8 = new JButton("delete");
+		delete8.setBounds(400, 478, 125, 29);
+		frame.getContentPane().add(delete8);
+		delete8.setVisible(false);
+		
+		act(btn8,label8,delete8);
+		del(btn8,label8,delete8);
+		
+		
+		JButton btn9 = new JButton("upload");
+		btn9.setBounds(575, 449, 125, 29);
+		frame.getContentPane().add(btn9);
+		JLabel label9 = new JLabel("");
+		label9.setBounds(575, 268, 125, 181);
+		frame.getContentPane().add(label9);
+		JButton delete9 = new JButton("delete");
+		delete9.setBounds(575, 478, 125, 29);
+		frame.getContentPane().add(delete9);
+		delete9.setVisible(false);
+		
+		act(btn9,label9,delete9);
+		del(btn9,label9,delete9);
+		
+		
+		JButton btn10 = new JButton("upload");
+		btn10.setBounds(750, 449, 125, 29);
+		frame.getContentPane().add(btn10);
+		JLabel label10 = new JLabel("");
+		label10.setBounds(750, 268, 125, 181);
+		frame.getContentPane().add(label10);
+		JButton delete10 = new JButton("delete");
+		delete10.setBounds(750, 478, 125, 29);
+		frame.getContentPane().add(delete10);
+		delete10.setVisible(false);
+		
+		act(btn10,label10,delete10);
+		del(btn10,label10,delete10);
+	}
+	
+	static ImageIcon createImageIcon(String imagePath, JLabel label) {
+		try {
+			BufferedImage originalImage = ImageIO.read(new File(imagePath));
+			
+			int labelWidth = label.getWidth();
+			int labelHeight = label.getHeight();
+			
+			if(labelWidth <=0 || labelHeight <= 0) {
+				labelWidth = 100;
+				labelHeight = 100;
+			}
+			
+			double ratioX = (double) labelWidth / originalImage.getWidth();
+            double ratioY = (double) labelHeight / originalImage.getHeight();
+            double ratio = Math.min(ratioX, ratioY);
+            
+            int newWidth = (int) (originalImage.getWidth() * ratio);
+            int newHeight = (int) (originalImage.getHeight() * ratio);
+            
+            Image resizedImage = originalImage.getScaledInstance
+            		(newWidth, newHeight, Image.SCALE_SMOOTH);
+			
+			return new ImageIcon(resizedImage);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+}

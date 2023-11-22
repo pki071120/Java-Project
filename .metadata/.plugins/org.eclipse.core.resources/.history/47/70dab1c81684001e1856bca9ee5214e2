@@ -1,0 +1,171 @@
+package javaproject;
+
+import java.awt.EventQueue;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+
+import javax.swing.JLabel;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Label;
+
+import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import java.io.File;
+import java.io.IOException;
+import javax.swing.SwingConstants;
+
+
+public class test extends JFrame implements ActionListener{
+
+	private JFrame frame;
+	JPanel p = new JPanel();
+	JFileChooser FC = new JFileChooser();
+	FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images","jpg","gif");
+
+	
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					test window = new test();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public test() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	static JLabel label1 = new JLabel("      file null");
+	public void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 934, 605);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		
+		label1.setBounds(50, 0, 125, 181);
+		JButton btnNewButton = new JButton("upload");
+		btnNewButton.setBounds(50, 180, 125, 29);
+		frame.getContentPane().setLayout(null);
+		
+		frame.getContentPane().add(label1);
+		frame.getContentPane().add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource()==btnNewButton) {
+					FC.setFileFilter(filter);
+					int returnVal = FC.showOpenDialog(getParent());
+					String imageUrl = FC.getSelectedFile().getPath();
+					ImageIcon imageIcon = createImageIcon(imageUrl);
+					if(returnVal == JFileChooser.APPROVE_OPTION) {
+						label1.setIcon(imageIcon);
+						btnNewButton.setVisible(false);
+					}
+				}
+			}
+		});
+		
+		JButton btnNewButton_1 = new JButton("New button");
+		btnNewButton_1.setBounds(225, 180, 125, 29);
+		frame.getContentPane().add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("New button");
+		btnNewButton_2.setBounds(400, 180, 125, 29);
+		frame.getContentPane().add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("New button");
+		btnNewButton_3.setBounds(575, 180, 125, 29);
+		frame.getContentPane().add(btnNewButton_3);
+		
+		JButton btnNewButton_4 = new JButton("New button");
+		btnNewButton_4.setBounds(750, 180, 125, 29);
+		frame.getContentPane().add(btnNewButton_4);
+		
+		JButton button = new JButton("New button");
+		button.setBounds(50, 390, 125, 29);
+		frame.getContentPane().add(button);
+		
+		JButton button_1 = new JButton("New button");
+		button_1.setBounds(225, 390, 125, 29);
+		frame.getContentPane().add(button_1);
+		
+		JButton button_2 = new JButton("New button");
+		button_2.setBounds(400, 390, 125, 29);
+		frame.getContentPane().add(button_2);
+		
+		JButton button_3 = new JButton("New button");
+		button_3.setBounds(575, 390, 125, 29);
+		frame.getContentPane().add(button_3);
+		
+		JButton button_4 = new JButton("New button");
+		button_4.setBounds(750, 390, 125, 29);
+		frame.getContentPane().add(button_4);
+		
+		JButton delete = new JButton("delete");
+		delete.setBounds(50, 209, 125, 29);
+		frame.getContentPane().add(delete);
+
+	}
+	static ImageIcon createImageIcon(String imagePath) {
+		try {
+			BufferedImage originalImage = ImageIO.read(new File(imagePath));
+			
+			int labelWidth = label1.getWidth();
+			int labelHeight = label1.getHeight();
+			
+			if(labelWidth <=0 || labelHeight <= 0) {
+				labelWidth = 100;
+				labelHeight = 100;
+			}
+			
+			double ratioX = (double) labelWidth / originalImage.getWidth();
+            double ratioY = (double) labelHeight / originalImage.getHeight();
+            double ratio = Math.min(ratioX, ratioY);
+            
+            int newWidth = (int) (originalImage.getWidth() * ratio);
+            int newHeight = (int) (originalImage.getHeight() * ratio);
+            
+            Image resizedImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+			
+			return new ImageIcon(resizedImage);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+}
